@@ -4,9 +4,29 @@ on:
     branches: [main]
 jobs:
 
+  run_tests:
+   runs-on: [ubuntu-latest]
+
+   steps:
+  # Чекаутим код
+   - uses: actions/checkout@master
+   # Устанавливаем python нужной версии
+   - uses: actions/setup-python@v1
+     with:
+       python-version: '3.8'
+       architecture: 'x64'
+   - name: Install requirements
+   # Устанавливаем зависимости
+     run: pip install -r requirements.txt
+   - name: Run tests
+     run: coverage run test_flask.py
+   - name: Tests report
+     run: coverage report
+
   converge:
     name: Converge
-    runs-on: ubuntu-latest
+    runs-on: [ubuntu-latest]
+    # runs-on: ubuntu-latest
     steps:
 
       - name: Checkout code
@@ -16,8 +36,8 @@ jobs:
 
       - name: Converge
         uses: werf/actions/converge@v1.2
-        with:
-          env: production
-          kube-config-base64-data: ${{ secrets.KUBE_CONFIG_BASE64_DATA }}
-        env:
-          WERF_SET_ENV_URL: "envUrl=http://habrapp.example.com"
+        # with:
+          # env: production
+          # kube-config-base64-data: ${{ secrets.KUBE_CONFIG_BASE64_DATA }}
+        # env:
+          # WERF_SET_ENV_URL: "envUrl=http://habrapp.example.com"
