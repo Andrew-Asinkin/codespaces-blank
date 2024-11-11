@@ -1,7 +1,8 @@
 # import pytest
 # import pytest_asyncio
 # from httpx import AsyncClient
-from home.runner.work.testing_ci_cd.testing_ci_cd.main import app
+# from home.runner.work.testing_ci_cd.testing_ci_cd.main import app
+from main import app
 from fastapi.testclient import TestClient
 
 
