@@ -24,6 +24,8 @@ jobs:
    - name: Install requirements
    # Устанавливаем зависимости
      run: pip install -r requirements.txt
+   - name: black
+     run: black --diff --check src/
    - name: Run tests
      run: pytest test_flask.py
      # run: coverage run test_flask.py
