@@ -27,6 +27,7 @@ jobs:
    - name: black
      run: black --diff --check .
    - name: Run tests
+     run: python -m main
      run: pytest test_flask.py
      # run: coverage run test_flask.py
    - name: Tests report
