@@ -26,8 +26,9 @@ jobs:
      run: pip install -r requirements.txt
    - name: black
      run: black --diff --check .
+   - name: Run main
+     run: python -m main 
    - name: Run tests
-     run: python -m main
      run: pytest test_flask.py
      # run: coverage run test_flask.py
    - name: Tests report
