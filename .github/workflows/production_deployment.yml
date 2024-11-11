@@ -29,7 +29,7 @@ jobs:
    - name: Run main
      run: python -m main 
    - name: Run tests
-     run: pytest test_flask.py
+     run: coverage run pytest test_flask.py
      # run: coverage run test_flask.py
    - name: Tests report
      run: coverage report
