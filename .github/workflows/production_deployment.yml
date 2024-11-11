@@ -5,7 +5,13 @@ on:
 jobs:
 
   run_tests:
+   name: "Testing"
    runs-on: ubuntu-latest
+   env:
+    working-directory: .
+   defaults:
+    run:
+     working-directory: ${{ env.working-directory }}
 
    steps:
   # Чекаутим код
