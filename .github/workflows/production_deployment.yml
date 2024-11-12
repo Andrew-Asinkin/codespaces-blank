@@ -31,24 +31,3 @@ jobs:
    - name: Run tests
      run: pytest test_flask.py
      # run: coverage run test_flask.py
-   - name: Tests report
-     run: coverage report
-
-  # converge:
-  #   name: Converge
-  #   # runs-on: [ubuntu-latest]
-  #   runs-on: ubuntu-latest
-  #   steps:
-
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 0
-
-  #     - name: Converge
-  #       uses: werf/actions/converge@v1.2
-  #       with:
-  #         env: production
-  #         kube-config-base64-data: ${{ secrets.ADD_SECRET_DATA }}
-  #       env:
-  #         WERF_SET_ENV_URL: "envUrl=http://habrapp.example.com"
