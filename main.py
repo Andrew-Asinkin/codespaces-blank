@@ -53,7 +53,7 @@ async def recipe(recipe: schemas.RecipeIn, session: Session = Depends(get_async_
     return new_recipe
 
 
-@app.get('/recipe/', response_model=List[schemas.BaseRecipe])
+@app.get('/recipe/')
 async def get_all_recipe(session: Session = Depends(get_async_session)) -> List[models.Recipe]:
     """
     Функция позволяет получить перечень всех рецептов в базе данных, а именно их идентификационные номера и названия
