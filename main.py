@@ -40,9 +40,8 @@ app = FastAPI(lifespan=lifespan)
 
 
 @app.post("/recipe/", response_model=schemas.RecipeOut)
-async def recipe(
-    recipe: schemas.RecipeIn, session: Session = Depends(get_async_session)
-) -> models.Recipe:
+async def recipe(recipe: schemas.RecipeIn, 
+                 session: Session) -> models.Recipe:
     """
     Функция позволяет добавить рецепт в базу данных,
     входные параметры задаются схемой param recipe:
