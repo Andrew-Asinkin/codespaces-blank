@@ -26,8 +26,13 @@ jobs:
      run: pip install -r requirements.txt
    - name: black
      run: black --diff --check .
+   - name: mypy
+     run: mypy .
+   - name: isort
+     run: isort --check-only .
+   - name: flask8
+     run: flake8 .
    - name: Run main
      run: python -m main 
    - name: Run tests
      run: pytest test_flask.py
-     # run: coverage run test_flask.py
