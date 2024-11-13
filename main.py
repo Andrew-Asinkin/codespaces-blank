@@ -23,8 +23,7 @@ async def get_session():
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI,
-                   session: Session = Depends(get_async_session)):
+async def lifespan(app: FastAPI, session: Session):
     """
     Функция определяет поведение приложения перед запуском
     до начала приема запросов и при завершении
@@ -57,9 +56,7 @@ async def recipe(
 
 
 @app.get("/recipe/")
-async def get_all_recipe(
-    session: Session = Depends(get_async_session),
-) -> List[models.Recipe]:
+async def get_all_recipe(session: Session) -> List[models.Recipe]:
     """
     Функция позволяет получить перечень всех рецептов в базе данных,
     а именно их идентификационные номера и названия
@@ -70,9 +67,7 @@ async def get_all_recipe(
 
 
 @app.get("/recipe/{recipe_id}", response_model=schemas.RecipeOut)
-async def get_recipe(
-    recipe_id: int, session: Session = Depends(get_async_session)
-) -> models.Recipe:
+async def get_recipe(recipe_id: int, session: Session) -> models.Recipe:
     """
     Функция позволяет выбрать подробную информацию о рецепте из базы данных,
     а также увеличивает счетчик просмотров рецепта
