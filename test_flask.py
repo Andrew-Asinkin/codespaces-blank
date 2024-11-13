@@ -18,7 +18,7 @@ def test_read_main():
     assert response.status_code == 200
 
 
-def test_read_main2():
+def test_read_main_one():
     response = client.get("/recipe/1")
     print("begin response")
     print(response)
@@ -29,15 +29,6 @@ def test_read_main2():
 
 
 def test_create_reciple() -> None:
-    headers = {"Content-Type": "application/json"}
-    user_data = {"name": "Никита", "views": 2, "time": 9}
-    response = client.post("/recipe", headers=headers, json=user_data)
-    print(f"response.json = {response.json()}")
-
-    assert response.status_code == 200
-
-
-def test_create_reciple2() -> None:
     user_data = {"name": "Никита", "views": 2, "time": 9}
     response = client.post(
         "/recipe/",
