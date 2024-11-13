@@ -12,8 +12,7 @@ class RecipeAll(BaseModel):
     name: str
 
 
-class RecipeIn(BaseRecipe):
-    ...
+class RecipeIn(BaseRecipe): ...
 
 
 class RecipeOut(BaseRecipe):
