@@ -1,14 +1,14 @@
 from contextlib import asynccontextmanager
 from typing import List
 
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException
 from sqlalchemy import MetaData, update
 from sqlalchemy.future import select
 from sqlmodel import Session
 
 import models
 import schemas
-from database import Base, engine, get_async_session, my_fast_session
+from database import Base, engine, my_fast_session
 
 metadata = MetaData()
 
@@ -40,7 +40,7 @@ app = FastAPI(lifespan=lifespan)
 
 
 @app.post("/recipe/", response_model=schemas.RecipeOut)
-async def recipe(recipe: schemas.RecipeIn, 
+async def recipe(recipe: schemas.RecipeIn,
                  session: Session) -> models.Recipe:
     """
     Функция позволяет добавить рецепт в базу данных,
