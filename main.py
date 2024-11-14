@@ -42,8 +42,8 @@ app = FastAPI(lifespan=lifespan)
 
 
 @app.post("/recipe/", response_model=schemas.RecipeOut)
-async def recipe(
-    recipe: schemas.RecipeIn, session: Session = my_session) -> models.Recipe:
+async def recipe(recipe: schemas.RecipeIn, 
+                 session: Session = my_session) -> models.Recipe:
     """
     Функция позволяет добавить рецепт в базу данных,
     входные параметры задаются схемой param recipe:
@@ -57,8 +57,8 @@ async def recipe(
 
 
 @app.get("/recipe/", response_model=List[schemas.RecipeAll])
-async def get_all_recipe(
-    session: Session = my_session) -> List[models.Recipe]:
+async def get_all_recipe(session: 
+                         Session = my_session) -> List[models.Recipe]:
     """
     Функция позволяет получить перечень всех рецептов в базе данных,
     а именно их идентификационные номера и названия
@@ -69,8 +69,8 @@ async def get_all_recipe(
 
 
 @app.get("/recipe/{recipe_id}", response_model=schemas.RecipeOut)
-async def get_recipe(
-    recipe_id: int, session: Session = my_session) -> models.Recipe:
+async def get_recipe(recipe_id: int, session: 
+                     Session = my_session) -> models.Recipe:
     """
     Функция позволяет выбрать подробную информацию о рецепте из базы данных,
     а также увеличивает счетчик просмотров рецепта
