@@ -42,7 +42,7 @@ app = FastAPI(lifespan=lifespan)
 
 
 @app.post("/recipe/", response_model=schemas.RecipeOut)
-async def recipe(recipe: schemas.RecipeIn, 
+async def recipe(recipe: schemas.RecipeIn,
                  session: Session = my_session) -> models.Recipe:
     """
     Функция позволяет добавить рецепт в базу данных,
@@ -57,7 +57,7 @@ async def recipe(recipe: schemas.RecipeIn,
 
 
 @app.get("/recipe/", response_model=List[schemas.RecipeAll])
-async def get_all_recipe(session: 
+async def get_all_recipe(session:
                          Session = my_session) -> List[models.Recipe]:
     """
     Функция позволяет получить перечень всех рецептов в базе данных,
@@ -69,7 +69,7 @@ async def get_all_recipe(session:
 
 
 @app.get("/recipe/{recipe_id}", response_model=schemas.RecipeOut)
-async def get_recipe(recipe_id: int, session: 
+async def get_recipe(recipe_id: int, session:
                      Session = my_session) -> models.Recipe:
     """
     Функция позволяет выбрать подробную информацию о рецепте из базы данных,
