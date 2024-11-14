@@ -1,14 +1,14 @@
 from contextlib import asynccontextmanager
 from typing import List
 
-from fastapi import FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy import MetaData, update
 from sqlalchemy.future import select
 from sqlmodel import Session
 
 import models
 import schemas
-from database import Base, engine, my_fast_session
+from database import Base, engine, get_async_session, my_fast_session
 
 metadata = MetaData()
 
@@ -23,7 +23,8 @@ async def get_session():
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI, session: Session):
+async def lifespan(app: FastAPI,
+                   session: Session = Depends(get_async_session)):
     """
     Функция определяет поведение приложения перед запуском
     до начала приема запросов и при завершении
@@ -40,8 +41,9 @@ app = FastAPI(lifespan=lifespan)
 
 
 @app.post("/recipe/", response_model=schemas.RecipeOut)
-async def recipe(recipe: schemas.RecipeIn,
-                 session: Session) -> models.Recipe:
+async def recipe(
+    recipe: schemas.RecipeIn, session: Session = Depends(get_async_session)
+) -> models.Recipe:
     """
     Функция позволяет добавить рецепт в базу данных,
     входные параметры задаются схемой param recipe:
@@ -54,8 +56,10 @@ async def recipe(recipe: schemas.RecipeIn,
     return new_recipe
 
 
-@app.get("/recipe/")
-async def get_all_recipe(session: Session) -> List[models.Recipe]:
+@app.get("/recipe/", response_model=List[schemas.RecipeAll])
+async def get_all_recipe(
+    session: Session = Depends(get_async_session),
+) -> List[models.Recipe]:
     """
     Функция позволяет получить перечень всех рецептов в базе данных,
     а именно их идентификационные номера и названия
@@ -66,7 +70,9 @@ async def get_all_recipe(session: Session) -> List[models.Recipe]:
 
 
 @app.get("/recipe/{recipe_id}", response_model=schemas.RecipeOut)
-async def get_recipe(recipe_id: int, session: Session) -> models.Recipe:
+async def get_recipe(
+    recipe_id: int, session: Session = Depends(get_async_session)
+) -> models.Recipe:
     """
     Функция позволяет выбрать подробную информацию о рецепте из базы данных,
     а также увеличивает счетчик просмотров рецепта
