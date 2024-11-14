@@ -11,6 +11,7 @@ import schemas
 from database import Base, engine, get_async_session, my_fast_session
 
 metadata = MetaData()
+my_session = Depends(get_async_session)
 
 
 # Dependency
@@ -24,7 +25,7 @@ async def get_session():
 
 @asynccontextmanager
 async def lifespan(app: FastAPI,
-                   session: Session = Depends(get_async_session)):
+                   session: Session = my_session):
     """
     Функция определяет поведение приложения перед запуском
     до начала приема запросов и при завершении
@@ -42,8 +43,7 @@ app = FastAPI(lifespan=lifespan)
 
 @app.post("/recipe/", response_model=schemas.RecipeOut)
 async def recipe(
-    recipe: schemas.RecipeIn, session: Session = Depends(get_async_session)
-) -> models.Recipe:
+    recipe: schemas.RecipeIn, session: Session = my_session) -> models.Recipe:
     """
     Функция позволяет добавить рецепт в базу данных,
     входные параметры задаются схемой param recipe:
@@ -58,8 +58,7 @@ async def recipe(
 
 @app.get("/recipe/", response_model=List[schemas.RecipeAll])
 async def get_all_recipe(
-    session: Session = Depends(get_async_session),
-) -> List[models.Recipe]:
+    session: Session = my_session) -> List[models.Recipe]:
     """
     Функция позволяет получить перечень всех рецептов в базе данных,
     а именно их идентификационные номера и названия
@@ -71,8 +70,7 @@ async def get_all_recipe(
 
 @app.get("/recipe/{recipe_id}", response_model=schemas.RecipeOut)
 async def get_recipe(
-    recipe_id: int, session: Session = Depends(get_async_session)
-) -> models.Recipe:
+    recipe_id: int, session: Session = my_session) -> models.Recipe:
     """
     Функция позволяет выбрать подробную информацию о рецепте из базы данных,
     а также увеличивает счетчик просмотров рецепта
