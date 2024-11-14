@@ -56,7 +56,7 @@ async def recipe(recipe: schemas.RecipeIn,
     return new_recipe
 
 
-@app.get("/recipe/", response_model=List[schemas.RecipeAll])
+@app.get("/recipe/", response_model=schemas.RecipeAll)
 async def get_all_recipe(session:
                          Session = my_session) -> List[models.Recipe]:
     """
